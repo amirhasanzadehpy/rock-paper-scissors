@@ -1,6 +1,7 @@
 import random
 
 from config import GAME_CHOICES, RULES, SCOREBOARD, MATCH_ELEMENT
+from decorators import log_time
 
 
 def get_user_choice():
@@ -34,7 +35,7 @@ def find_winner(user, system):
     return RULES[tuple(sorted(match))]
 
 
-def play():
+def play_one_hand():
     result = {'user': 0, 'system': 0}
 
     while result['user'] < 3 and result['system'] < 3:
@@ -60,7 +61,12 @@ def play():
     update_scoreboard(result)
     play_again = input("Would you like to play again? (y/n): ")
     if play_again == 'y':
-        play()
+        play_one_hand()
+
+
+@log_time
+def play():
+    play_one_hand()
 
 
 if __name__ == '__main__':
